@@ -4,7 +4,7 @@
 
 # Name
 
-PROJECT_NAME = template
+PROJECT_NAME = array
 NAME	= ./$(PROJECT_NAME)
 
 #______________________________________________________________________________#
