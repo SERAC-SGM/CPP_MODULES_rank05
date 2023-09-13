@@ -21,7 +21,6 @@ public:
 	unsigned int		getGradeSign() const;
 	unsigned int		getGradeExecute() const;
 	void				beSigned(const Bureaucrat &bureaucrat);
-	void				signForm(const Bureaucrat &bureaucrat);
 	virtual void		execute(Bureaucrat const &executor) const = 0;
 
 private:

@@ -4,6 +4,8 @@
 # include "Bureaucrat.hpp"
 #include <string>
 
+class Bureaucrat;
+
 class Form
 {
 public:

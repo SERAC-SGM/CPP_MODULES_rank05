@@ -22,25 +22,25 @@ int main()
 	std::cout << std::endl;
 
 	std::cout << "===== testing valid sign grade =====" << std::endl;
-	f1.beSigned(b2);
 	std::cout << b2 << std::endl;
+	b2.signForm(f1);
 	std::cout << f1 << std::endl;
 	std::cout << std::endl;
 
 	std::cout << "===== testing double sign grade =====" << std::endl;
-	f1.beSigned(b2);
+	b2.signForm(f1);
 	std::cout << std::endl;
 
 	std::cout << "===== testing invalid sign grade (too low) =====" << std::endl;
-	f4.beSigned(b1);
 	std::cout << b1 << std::endl;
+	b1.signForm(f4);
 	std::cout << f4 << std::endl;
 	std::cout << std::endl;
 
 	std::cout << "===== testing invalid sign grade (invalid grade) =====" << std::endl;
 	Bureaucrat b7("b7", 155);
-	f5.beSigned(b7);
 	std::cout << b7 << std::endl;
+	b7.signForm(f5);
 	std::cout << f5 << std::endl;
 	std::cout << std::endl;
 

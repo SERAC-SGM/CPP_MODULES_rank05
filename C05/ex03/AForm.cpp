@@ -57,28 +57,12 @@ void				AForm::beSigned(const Bureaucrat &bureaucrat)
 	try
 	{
 		if (bureaucrat.getGrade() > this->getGradeSign())
-			throw std::string("AAForm::GradeTooLowException");
+			throw std::string("Form::GradeTooLowException");
+		this->_signed = true;
 	} catch (const std::string &error)
 	{
 		std::cerr << error << std::endl;
 	}
-	this->signForm(bureaucrat);
-}
-
-void				AForm::signForm(const Bureaucrat &bureaucrat)
-{
-	if (!this->isSigned())
-	{
-		std::cout << bureaucrat.getName() << " signed " << this->getName();
-		this->_signed = true;
-	}
-	else
-		std::cout << bureaucrat.getName() << " couldn't sign " << this->getName() << " because the form is already signed";
-	if (bureaucrat.getGrade() < 1 || bureaucrat.getGrade() > 150)
-		std::cout << bureaucrat.getName() << " couldn't sign " << this->getName() << " because its grade is invalid";
-	else if (this->getGradeSign() < bureaucrat.getGrade())
-		std::cout << bureaucrat.getName() << " couldn't sign " << this->getName() << " because its grade is too low";
-	std::cout << std::endl;
 }
 
 std::ostream &operator << (std::ostream &flux, const AForm &object)
