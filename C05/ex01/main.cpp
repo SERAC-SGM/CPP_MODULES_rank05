@@ -27,6 +27,10 @@ int main()
 	std::cout << f1 << std::endl;
 	std::cout << std::endl;
 
+	std::cout << "===== testing double sign grade =====" << std::endl;
+	f1.beSigned(b2);
+	std::cout << std::endl;
+
 	std::cout << "===== testing invalid sign grade (too low) =====" << std::endl;
 	f4.beSigned(b1);
 	std::cout << b1 << std::endl;

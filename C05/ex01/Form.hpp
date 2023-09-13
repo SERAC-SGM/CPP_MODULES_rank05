@@ -19,7 +19,7 @@ public:
 	unsigned int		getGradeSign() const;
 	unsigned int		getGradeExecute() const;
 	void				beSigned(const Bureaucrat &bureaucrat);
-	void				signAForm(const Bureaucrat &bureaucrat);
+	void				signForm(const Bureaucrat &bureaucrat);
 
 private:
 
