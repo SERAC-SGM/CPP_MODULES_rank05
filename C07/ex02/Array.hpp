@@ -2,6 +2,7 @@
 # define ARRAY_H
 
 #include <stdexcept>
+#include <iostream>
 
 template<typename T>
 class Array
@@ -17,15 +18,14 @@ public:
 			this->_array[i] = T();
 	}
 
-	Array(const Array &toCopy): _size(toCopy._size)
+	Array(const Array &toCopy): _array(new T[toCopy._size]), _size(toCopy._size) 
 	{
 		*this = toCopy;
 	}
 
 	~Array()
 	{
-		//std::cout << "destructor called" << std::endl;
-		delete this->_array;
+		delete [] this->_array;
 	}
 
 	unsigned int	size() const
@@ -37,7 +37,7 @@ public:
 	{
 		if (this == &rhs)
 			return *this;
-		//delete [] this->_array;
+		delete [] this->_array;
 		this->_size = rhs._size;
 		this->_array = new T[this->_size];
 		for (unsigned int i = 0; i < this->_size; i++)
