@@ -14,6 +14,7 @@ public:
 	Span	&operator=(const Span &rhs);
 
 	void			addNumber(int n);
+	void			addNumber( std::list<int>::const_iterator itBegin, std::list<int>::const_iterator itEnd );
 	unsigned int	shortestSpan();
 	unsigned int	longestSpan();
 

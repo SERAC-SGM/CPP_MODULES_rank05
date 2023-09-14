@@ -6,16 +6,14 @@
 #include <list>
 #include <iostream>
 
-Span::Span(unsigned int N): _n(N)
-{}
+Span::Span(unsigned int N): _n(N) {}
 
 Span::Span(const Span &toCopy)
 {
 	*this = toCopy;
 }
 
-Span::~Span()
-{}
+Span::~Span() {}
 
 Span	&Span::operator=(const Span &rhs)
 {
@@ -31,6 +29,13 @@ void	Span::addNumber(int n)
 	if (this->_list.size() + 1 > this->_n)
 		throw std::out_of_range("Span::addNumber: list is full");
 	this->_list.push_back(n);
+}
+
+void Span::addNumber( std::list<int>::const_iterator itBegin, std::list<int>::const_iterator itEnd )
+{
+	if ( _list.size() > _n )
+		throw std::out_of_range("Span::addNumber: list is full");
+	_list.insert( _list.end(), itBegin, itEnd );
 }
 
 unsigned int	Span::shortestSpan()
