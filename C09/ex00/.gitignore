@@ -1,0 +1,5 @@
+build/
+objs/
+btc
+data.csv
+test.txt
