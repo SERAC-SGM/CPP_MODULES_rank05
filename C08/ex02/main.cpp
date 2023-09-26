@@ -5,7 +5,7 @@
 
 int main()
 {
-	std::cout << "/ ***** MutantStack ***** /" << std::endl;
+	std::cout << "===== MutantStack =====" << std::endl;
 
 	MutantStack<int> mstack;
 
@@ -38,7 +38,7 @@ int main()
 	/* -------------------------------------------------------------------- */
 
 	std::cout << std::endl;
-	std::cout << "/ ***** List ***** /" << std::endl;
+	std::cout << "===== List =====" << std::endl;
 
 	std::list< int > lst;
 

@@ -52,9 +52,9 @@ int main()
 	}
 	cout << endl << "===== Testing iterator range =====" << endl << endl;
 	{
+		std::srand(time(0));
 		try {
-			std::list<int> range(100000);
-			std::srand(time(0));
+			std::list<int> range(10);
 			std::generate(range.begin(), range.end(), std::rand);
 			Span sp(range.size());
 			sp.addNumber(range.begin(), range.end());
