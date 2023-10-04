@@ -21,9 +21,13 @@ public:
 
 	PmergeMe	&operator=(const PmergeMe &rhs);
 
-	bool		isInt(const std::string &);
-	int			ft_stoi(const std::string &);
-	void		sort();
+	bool							isInt(const std::string &);
+	int								ft_stoi(const std::string &);
+	std::vector<std::vector<int> >	createPairs();
+	void							sortPairs(std::vector<std::vector<int> > &);
+	void							sortByLargerValue(std::vector<std::vector<int> > &);
+	std::vector<int>				createSortedVector(std::vector<std::vector<int> > &, int);
+	void							mergeInsertionSort();
 
 protected:
 

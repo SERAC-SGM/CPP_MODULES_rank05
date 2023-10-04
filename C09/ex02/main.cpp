@@ -11,6 +11,7 @@ int main(int argc, char *argv[])
 	}
 	try{
 		PmergeMe test(argv[1]);
+		test.mergeInsertionSort();
 	} catch (const std::exception &e) {
 		std::cout << e.what() << std::endl;
 	}
