@@ -10,6 +10,7 @@
 # include <list>
 # include <iostream>
 
+template<typename T, typename U>
 class PmergeMe
 {
 public:
@@ -21,13 +22,33 @@ public:
 
 	PmergeMe	&operator=(const PmergeMe &rhs);
 
-	bool							isInt(const std::string &);
-	int								ft_stoi(const std::string &);
-	std::vector<std::vector<int> >	createPairs();
-	void							sortPairs(std::vector<std::vector<int> > &);
-	void							sortByLargerValue(std::vector<std::vector<int> > &);
-	std::vector<int>				createSortedVector(std::vector<std::vector<int> > &, int);
-	void							mergeInsertionSort();
+	bool		isInt(const std::string &);
+	int			ft_stoi(const std::string &);
+	//template<typename U>
+	T<U> createPairs(T<U> &container)
+	{
+		T<T<int> >	splitArray;
+		T<int>		pair;
+		int			straggler = this->_size % 2;
+
+		for (size_t i = 0; i < this->_size - straggler; i += 2)
+		{
+			pair.push_back(container[i]);
+			pair.push_back(container[i + 1]);
+			splitArray.push_back(pair);
+			pair.clear();
+		}
+		if (straggler)
+		{
+			pair.push_back(container[this->_size - 1]);
+			splitArray.push_back(pair);
+		}
+		return splitArray;
+	}
+	void	sortPairs(T<T<int> > &);
+	void	sortByLargerValue(T<T<int> > &);
+	T<int>	createSortedVector(T<T<int> > &, int);
+	void	mergeInsertionSort(T &);
 
 protected:
 
@@ -36,4 +57,7 @@ protected:
 	std::list<int>				_list;
 
 };
+
+#include "PmergeMe.tpp"
+
 #endif
