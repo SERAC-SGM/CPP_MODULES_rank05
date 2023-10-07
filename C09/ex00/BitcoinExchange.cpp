@@ -68,8 +68,6 @@ std::string	BitcoinExchange::getDate(std::string line) const
 
 	if (line[len - 1] == ' ' || line[len - 1] == '\t')
 		line.erase(line.size() - 1, 1);
-	if (!checkDate(line))
-		throw std::invalid_argument("BitcoinExchange::InvalidDate");
 	return line;
 }
 
@@ -87,7 +85,7 @@ float		BitcoinExchange::ft_stof(const std::string &str) const
 float		BitcoinExchange::getValue(std::string line, bool db) const
 {
 	if (line.empty())
-		throw std::invalid_argument("BitcoinExchange::InvalidValue");
+		throw std::invalid_argument("BitcoinExchange::EmptyValue");
 
 	size_t	len = line.size();
 	float	value;
@@ -97,10 +95,10 @@ float		BitcoinExchange::getValue(std::string line, bool db) const
 	if (line[len - 1] == '\n')
 		line.erase(line.size() - 1, 1);
 	value = ft_stof(line);
-	if (value < 0.0)
-		throw std::out_of_range("BitcoinExchange::NegativeValue");
-	if ((db && value > static_cast<float>(INT_MAX)) || (!db && value > 1000))
-		throw std::out_of_range("BitcoinExchange::TooLargeValue");
+	//if (value < 0.0)
+		//throw std::out_of_range("BitcoinExchange::NegativeValue");
+	if (db && value > static_cast<float>(INT_MAX))
+		throw std::out_of_range("BitcoinExchange::TooLargeValueInDataBase");
 	return value;
 }
 
@@ -160,10 +158,22 @@ void		BitcoinExchange::convert()
 		if (separatorPos == std::string::npos)
 			throw std::invalid_argument("BitcoinExchange::BadInputInFile");
 		std::string date = getDate(line.substr(0, separatorPos));
+		if (!checkDate(date))
+		{
+			std::cout << "Error : bad input => " << date << std::endl;
+			return ;
+		}
 		float value = getValue(line.substr(separatorPos + 1), false);
-		std:: cout << date;
-		date = getClosestDate(date);
-		std::cout << " => " << value << " = " << this->_dataBaseMap[date] * value << std::endl;
+		if (value < 0.0)
+			std::cout << "Error : not a positive number => " << value << std::endl;
+		else if (value > 1000)
+			std::cout << "Error : too large number => " << value << std::endl;
+		else
+		{
+			std:: cout << date;
+			date = getClosestDate(date);
+			std::cout << " => " << value << " = " << this->_dataBaseMap[date] * value << std::endl;
+		}
 	}
 	return ;
 }
