@@ -20,8 +20,7 @@ class PmergeMe
 {
 public:
 
-	PmergeMe();
-	PmergeMe(const std::string &);
+	PmergeMe(int argc, char **argv);
 	PmergeMe(const PmergeMe &toCopy);
 	~PmergeMe();
 
@@ -31,6 +30,9 @@ public:
 
 protected:
 
+	PmergeMe();
+
+	bool 					validateInput(std::string s);
 	bool					isInt(const std::string &);
 	int						ft_stoi(const std::string &);
 	vector<vector<int> >	createPairs(vector<int> &container);

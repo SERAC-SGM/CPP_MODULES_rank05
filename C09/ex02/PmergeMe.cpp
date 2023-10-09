@@ -2,7 +2,10 @@
 # define PMERGEME_TPP
 
 # include "PmergeMe.hpp"
+#include <bits/types/clock_t.h>
 #include <deque>
+#include <iomanip>
+#include <cstring>
 
 const unsigned int jacobstahlNumbers[] =
 {
@@ -13,19 +16,37 @@ const unsigned int jacobstahlNumbers[] =
 
 PmergeMe::PmergeMe() {}
 
-PmergeMe::PmergeMe(const std::string &args): _size(0)
+bool PmergeMe::validateInput(std::string s)
 {
-	std::stringstream	sargs(args);
-	std::string			token;
+	char *ptr = NULL;
+	double value = std::strtod(s.c_str(), &ptr);
+	if (value == 0.0 && !std::isdigit(s[0])) return false;
+	if (*ptr && std::strcmp(ptr, "f")) return false;
+	if (value < 0) return false;
+	return (value == static_cast<int>(value));	
+}
 
-	while (sargs >> token)
+PmergeMe::PmergeMe(int argc, char **argv): _size(0)
+{
+	int i = 1;
+	while (i < argc)
 	{
-		this->_vector.push_back(ft_stoi(token));
-		this->_deque.push_back(ft_stoi(token));
-		++this->_size;
+		std::string stringTmp(argv[i]);
+		std::istringstream ss(stringTmp);
+		std::string stringBuffer;
+		while (std::getline(ss, stringBuffer, ' '))
+		{
+			if (!stringBuffer.empty() && validateInput(stringBuffer) == false)
+				throw std::invalid_argument("PmergeMe::InvalidType");
+			if (stringBuffer.empty()) continue;
+			this->_vector.push_back(static_cast<int>(std::strtod(stringBuffer.c_str(), NULL)));
+		}
+		++i;
 	}
+	this->_size = this->_vector.size();
+	this->_deque.assign(this->_vector.begin(), this->_vector.end());
 
-	cout << "before : ";
+	cout << "Before:\t";
 	for (size_t i = 0; i < this->_size; ++i)
 		cout << this->_vector[i] << " ";
 	cout << endl;
@@ -41,7 +62,6 @@ PmergeMe::~PmergeMe()
 	this->_deque.clear();
 	this->_vector.clear();
 	this->_sorted.clear();
-
 }
 
 PmergeMe	&PmergeMe::operator=(const PmergeMe &rhs)
@@ -186,18 +206,12 @@ T				PmergeMe::getJacobNumber(T &pend)
 	int	jacobIndex = 3;
 	(void)pend;
 
-//	if (pend.size < )
-
-	// cout << "pend size - 1 = " << pend.size() - 1 << endl;
 	while (jacobstahlNumbers[jacobIndex] < 21)//pend.size() - 1)
 	{
 		end_sequence.push_back(jacobstahlNumbers[jacobIndex]);
 		++jacobIndex;
 	}
-	// cout << "JACOB : " << endl;
-	// for (size_t i = 0; i < end_sequence.size(); ++i)
-	// 	cout << end_sequence[i] << " ";
-	// cout << endl;
+
 	return end_sequence;
 }
 
@@ -257,11 +271,6 @@ vector<int>	PmergeMe::createSortedVector(vector<vector<int> > &sortedSplitArray,
 		s.insert(s.begin() + insertionPoint, item);
 		++jacobIndex;
 		++iterator;
-
-		// cout << "S : " << endl;
-		// for (size_t i = 0; i < s.size(); ++i)
-		// 	cout << s[i] << " ";
-		// cout << endl << endl;
 	}
 
 	if (this->_size % 2)
@@ -365,24 +374,31 @@ void	PmergeMe::mergeInsertionSortDeque()
 	sortPairsDeque(splitArray);
 	insertionSortPairsDeque(splitArray, splitArray.size());
 	deque<int> sorted = createSortedDeque(splitArray, straggler);
-	// cout << "deque after : ";
-	// for (size_t i = 0; i < this->_size; ++i)
-	// 	cout << sorted[i] << " ";
-	// cout << endl;
 }
 
 void	PmergeMe::sort()
 {
-	//CLOCK START
+	if (this->_size == 1)
+	{
+		clock_t	start = clock();
+		cout << "After:\t" << this->_vector[0] << endl;
+		clock_t	end = clock();
+		cout << "Time to process a range of " << std::setw(4) << this->_vector.size() << " element with std::vector : " << std::setw(10) << (end - start) / (double)CLOCKS_PER_SEC << " seconds" << endl;
+		cout << "Time to process a range of " << std::setw(4) << this->_deque.size() << " element with std::deque : " << std::setw(10) << (end - start) / (double)CLOCKS_PER_SEC << " seconds" << endl;
+		return ;
+	}
+	clock_t start = clock();
 	vector<int> sorted = mergeInsertionSortVector();
-	//CLOCK END
-	//CLOCK START
+	clock_t	end = clock();
+	clock_t	start2 = clock();
 	mergeInsertionSortDeque();
-	//CLOCK END
-	cout << "after : ";
+	clock_t	end2 = clock();
+	cout << "After:\t";
 	for (size_t i = 0; i < this->_size; ++i)
 		cout << sorted[i] << " ";
 	cout << endl;
+	cout << "Time to process a range of " << std::setw(4) << this->_vector.size() << " elements with std::vector : " << std::setw(10) << (end - start) / (double)CLOCKS_PER_SEC << " seconds" << endl;
+	cout << "Time to process a range of " << std::setw(4) << this->_deque.size() << " elements with std::deque : " << std::setw(10) << (end2 - start2) / (double)CLOCKS_PER_SEC << " seconds" << endl;
 }
 
 #endif
